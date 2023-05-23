@@ -20,7 +20,8 @@ public class Utility {
 
     public static LocalDate getSecondMonthStartDate(LocalDate localDate)
     {
-        return LocalDate.of(localDate.getYear(), localDate.getMonthValue()-1, 01);
+        LocalDate localDate1 = localDate.minusMonths(1);
+        return LocalDate.of(localDate1.getYear(), localDate1.getMonthValue(), 01);
     }
     public static LocalDate getLastMonthStartDate(LocalDate localDate)
     {
