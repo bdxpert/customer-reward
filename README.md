@@ -1,5 +1,5 @@
 # Customer Reward
-Simple springboot application used to calculate customer reward.
+Simple springboot application used to calculate customer reward for three month duration(current month and last two month).
 
 Application will run on default 8080 port and will use h2 memory database  
 
