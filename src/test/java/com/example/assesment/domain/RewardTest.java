@@ -1,10 +1,6 @@
 package com.example.assesment.domain;
 
-import com.example.assesment.domain.IReward;
-import com.example.assesment.dto.CustomerRewardDTO;
 import com.example.assesment.entity.TransactionRecord;
-import com.example.assesment.service.impl.CustomerServiceImpl;
-import com.example.assesment.util.Utility;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
