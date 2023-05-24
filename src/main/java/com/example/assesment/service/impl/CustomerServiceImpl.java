@@ -56,10 +56,10 @@ public class CustomerServiceImpl implements CustomerService {
         log.info("Calculate reward points for all customer...");
         List<Customer> customers = customerRepository.findAllByTransactionRecordsDateBetween(startDate, endDate);
 
-        for (Customer customer : customers) {
+        customers.stream().forEach(customer -> {
             RewardDTO reward = calculateReward(customer, startDate, endDate);
             customer.setReward(reward);
-        }
+        });
 
         List<CustomerRewardDTO> customerRewardDTOs = customers
                 .stream()
