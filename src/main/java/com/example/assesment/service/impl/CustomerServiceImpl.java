@@ -17,9 +17,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static com.example.assesment.util.AppConstant.*;
 
 @Slf4j
 @Service
@@ -80,26 +84,26 @@ public class CustomerServiceImpl implements CustomerService {
 
     private RewardDTO calculateReward(Customer customer, LocalDate startDate, LocalDate endDate) {
         //Extract all the dates of transactions
+        Map<String, Double> rewardRecord = new HashMap<>();
+        rewardRecord.put(FIRST_MONTH_REWARD_POINT, 0.0);
+        rewardRecord.put(SECOND_MONTH_REWARD_POINT, 0.0);
+        rewardRecord.put(THIRD_MONTH_REWARD_POINT, 0.0);
 
         LocalDate fistMonthStartDate = Utility.getFirstMonthStartDate(startDate);
         LocalDate secondMonthStartDate = Utility.getSecondMonthStartDate(endDate);
         LocalDate lastMonthStartDate = Utility.getLastMonthStartDate(endDate);
 
-        double firstMonthRewardPoint = 0.0;
-        double secondMonthRewardPoint = 0.0;
-        double thirdMonthRewardPoint = 0.0;
-
-        for (TransactionRecord transactionRecord : customer.getTransactionRecords()) {
+        customer.getTransactionRecords().stream().forEach(transactionRecord -> {
             if (Utility.matchMonthOnStartAndEndDate(fistMonthStartDate, transactionRecord.getDate())) {
-                firstMonthRewardPoint += reward.calculatePoint(transactionRecord);
+                rewardRecord.put(FIRST_MONTH_REWARD_POINT, rewardRecord.get(FIRST_MONTH_REWARD_POINT) +reward.calculatePoint(transactionRecord));
             } else if (Utility.matchMonthOnStartAndEndDate(secondMonthStartDate, transactionRecord.getDate())) {
-                secondMonthRewardPoint += reward.calculatePoint(transactionRecord);
+                rewardRecord.put(SECOND_MONTH_REWARD_POINT, rewardRecord.get(SECOND_MONTH_REWARD_POINT) +reward.calculatePoint(transactionRecord));
             } else if (Utility.matchMonthOnStartAndEndDate(lastMonthStartDate, transactionRecord.getDate())) {
-                thirdMonthRewardPoint += reward.calculatePoint(transactionRecord);
+                rewardRecord.put(THIRD_MONTH_REWARD_POINT, rewardRecord.get(THIRD_MONTH_REWARD_POINT) +reward.calculatePoint(transactionRecord));
             }
-        }
+        });
 
-        return getReward(firstMonthRewardPoint, secondMonthRewardPoint, thirdMonthRewardPoint);
+        return getReward(rewardRecord.get(FIRST_MONTH_REWARD_POINT), rewardRecord.get(SECOND_MONTH_REWARD_POINT), rewardRecord.get(THIRD_MONTH_REWARD_POINT));
     }
     private RewardDTO getReward(double firstMonthRewardPoint,double secondMonthRewardPoint, double thirdMonthRewardPoint)
     {
