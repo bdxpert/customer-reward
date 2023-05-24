@@ -6,7 +6,7 @@ Application will run on default 8080 port and will use h2 memory database
 ### You can build the jar file using command (run this command on project root directory)
 $ mvn clean install
 
-### To run application use (Jar file available in /target folder in project directory)
+### To run application use below command (Jar file available in /target folder in project directory)
 $ java -jar assesment-0.0.1-SNAPSHOT.jar
 
 ### Get specific customer rewards points
