@@ -95,19 +95,22 @@ public class CustomerServiceImpl implements CustomerService {
 
         customer.getTransactionRecords().stream().forEach(transactionRecord -> {
             if (Utility.matchMonthOnStartAndEndDate(fistMonthStartDate, transactionRecord.getDate())) {
-                rewardRecord.put(FIRST_MONTH_REWARD_POINT, rewardRecord.get(FIRST_MONTH_REWARD_POINT) +reward.calculatePoint(transactionRecord));
+                rewardRecord.put(FIRST_MONTH_REWARD_POINT,
+                        rewardRecord.get(FIRST_MONTH_REWARD_POINT) + reward.calculatePoint(transactionRecord));
             } else if (Utility.matchMonthOnStartAndEndDate(secondMonthStartDate, transactionRecord.getDate())) {
-                rewardRecord.put(SECOND_MONTH_REWARD_POINT, rewardRecord.get(SECOND_MONTH_REWARD_POINT) +reward.calculatePoint(transactionRecord));
+                rewardRecord.put(SECOND_MONTH_REWARD_POINT,
+                        rewardRecord.get(SECOND_MONTH_REWARD_POINT) + reward.calculatePoint(transactionRecord));
             } else if (Utility.matchMonthOnStartAndEndDate(lastMonthStartDate, transactionRecord.getDate())) {
-                rewardRecord.put(THIRD_MONTH_REWARD_POINT, rewardRecord.get(THIRD_MONTH_REWARD_POINT) +reward.calculatePoint(transactionRecord));
+                rewardRecord.put(THIRD_MONTH_REWARD_POINT,
+                        rewardRecord.get(THIRD_MONTH_REWARD_POINT) + reward.calculatePoint(transactionRecord));
             }
         });
 
         return getReward(rewardRecord.get(FIRST_MONTH_REWARD_POINT), rewardRecord.get(SECOND_MONTH_REWARD_POINT), rewardRecord.get(THIRD_MONTH_REWARD_POINT));
     }
-    private RewardDTO getReward(double firstMonthRewardPoint,double secondMonthRewardPoint, double thirdMonthRewardPoint)
-    {
+
+    private RewardDTO getReward(double firstMonthRewardPoint, double secondMonthRewardPoint, double thirdMonthRewardPoint) {
         double totalReward = firstMonthRewardPoint + secondMonthRewardPoint + thirdMonthRewardPoint;
-        return new RewardDTO(firstMonthRewardPoint,secondMonthRewardPoint, thirdMonthRewardPoint, totalReward);
+        return new RewardDTO(firstMonthRewardPoint, secondMonthRewardPoint, thirdMonthRewardPoint, totalReward);
     }
 }
