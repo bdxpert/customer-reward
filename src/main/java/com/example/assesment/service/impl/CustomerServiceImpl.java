@@ -2,7 +2,6 @@ package com.example.assesment.service.impl;
 
 import com.example.assesment.entity.Customer;
 import com.example.assesment.domain.IReward;
-import com.example.assesment.entity.TransactionRecord;
 import com.example.assesment.dto.CustomerRewardDTO;
 import com.example.assesment.dto.CustomerTransactionDTO;
 import com.example.assesment.dto.RewardDTO;
@@ -15,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -37,7 +37,7 @@ public class CustomerServiceImpl implements CustomerService {
         this.modelMapper = modelMapper;
         this.reward = reward;
     }
-
+    @Transactional(readOnly = true)
     public CustomerRewardDTO getCustomerReward(long customerId, LocalDate startDate, LocalDate endDate) {
 
         Optional<Customer> customer =
@@ -51,7 +51,7 @@ public class CustomerServiceImpl implements CustomerService {
 
         return customerRewardDTO;
     }
-
+    @Transactional(readOnly = true)
     public List<CustomerRewardDTO> getAllCustomerReward(LocalDate startDate, LocalDate endDate) {
         log.info("Calculate reward points for all customer...");
         List<Customer> customers = customerRepository.findAllByTransactionRecordsDateBetween(startDate, endDate);
@@ -68,7 +68,7 @@ public class CustomerServiceImpl implements CustomerService {
 
         return customerRewardDTOs;
     }
-
+    @Transactional(readOnly = true)
     public List<CustomerTransactionDTO> getCustomersTransactions() {
         log.info("Fetching Customer Transactions Started...");
         List<Customer> customers = customerRepository.findAll();
