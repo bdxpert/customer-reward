@@ -14,11 +14,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class RewardTest {
 
     @Autowired
-    IReward reward;
+    private IReward reward;
 
     @DisplayName("Test Customer reward calculation")
     @Test
-    void testGet() {
+    public void testGet() {
         TransactionRecord one = new TransactionRecord(2L, LocalDate.parse("2023-03-11"), 120.0);
         TransactionRecord two = new TransactionRecord(19L, LocalDate.parse("2023-03-11"), 40);
         TransactionRecord three = new TransactionRecord(20L, LocalDate.parse("2023-03-11"), 80.0);

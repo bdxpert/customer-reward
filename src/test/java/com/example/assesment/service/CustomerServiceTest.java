@@ -13,6 +13,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -22,16 +23,17 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-
+//https://stackoverflow.com/questions/38711871/load-different-application-yml-in-springboot-test?noredirect=1&lq=1
 //https://docs.spring.io/spring-boot/docs/2.1.2.RELEASE/reference/htmlsingle/#boot-features-testing-spring-boot-applications
 @SpringBootTest
+@TestPropertySource(locations="classpath:test.properties")
 public class CustomerServiceTest {
 
 
-    CustomerService customerService;
-    ModelMapper modelMapper;
-    CustomerRepository customerRepository;
-    IReward iReward;
+    private CustomerService customerService;
+    private ModelMapper modelMapper;
+    private CustomerRepository customerRepository;
+    private IReward iReward;
 
     private Customer customer;
 
